@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "id": "PO-0001",
+    "backlog_item_id": "2",
+    "supplier_name": "Pacific Servo Supply",
+    "quantity": 75,
+    "unit_cost": 445.0,
+    "expected_delivery_date": "2025-10-20",
+    "status": "Pending",
+    "created_date": "2025-09-30",
+    "notes": "Rush order to clear Tokyo backlog"
+  }
+]

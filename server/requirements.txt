@@ -1,3 +1,6 @@
+# Runtime dependencies. Canonical source is pyproject.toml; this mirrors it
+# for the `pip install -r requirements.txt` flow. Dev/test deps live in
+# requirements-dev.txt.
 fastapi>=0.110.0
 uvicorn>=0.24.0
 pydantic>=2.5.0

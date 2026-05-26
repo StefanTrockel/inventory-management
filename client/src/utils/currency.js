@@ -1,28 +1,40 @@
-// Currency conversion utility
-// USD to JPY exchange rate (approximate)
-const USD_TO_JPY = 150
+const USD_TO_JPY = 150;
 
-export function formatCurrency(amount, currency = 'USD') {
-  if (currency === 'JPY') {
-    const yenAmount = Math.round(amount * USD_TO_JPY)
-    return `¥${yenAmount.toLocaleString('ja-JP')}`
-  }
-  // Default USD
-  return `$${amount.toLocaleString('en-US', { maximumFractionDigits: 0 })}`
+function coerceFinite(amount) {
+  const n = Number(amount);
+  return Number.isFinite(n) ? n : 0;
 }
 
-export function formatCurrencyWithDecimals(amount, currency = 'USD', decimals = 0) {
-  if (currency === 'JPY') {
-    const yenAmount = Math.round(amount * USD_TO_JPY)
-    return `¥${yenAmount.toLocaleString('ja-JP')}`
+export function formatCurrency(amount, currency = "USD") {
+  const n = coerceFinite(amount);
+  if (currency === "JPY") {
+    const yenAmount = Math.round(n * USD_TO_JPY);
+    return `¥${yenAmount.toLocaleString("ja-JP")}`;
   }
-  // Default USD
-  return `$${amount.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`
+  return `$${n.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
 }
 
-export function convertAmount(amount, currency = 'USD') {
-  if (currency === 'JPY') {
-    return Math.round(amount * USD_TO_JPY)
+export function formatCurrencyWithDecimals(
+  amount,
+  currency = "USD",
+  decimals = 0,
+) {
+  const n = coerceFinite(amount);
+  if (currency === "JPY") {
+    const yenAmount = n * USD_TO_JPY;
+    return `¥${yenAmount.toLocaleString("ja-JP", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
   }
-  return amount
+  return `$${n.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+}
+
+export function convertAmount(amount, currency = "USD") {
+  const n = coerceFinite(amount);
+  if (currency === "JPY") {
+    return Math.round(n * USD_TO_JPY);
+  }
+  return n;
+}
+
+export function currencySymbol(currency = "USD") {
+  return currency === "JPY" ? "¥" : "$";
 }
