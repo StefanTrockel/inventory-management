@@ -1,118 +1,99 @@
-import { ref, computed } from 'vue'
-import en from '../locales/en'
-import ja from '../locales/ja'
+import { ref, computed } from "vue";
+import en from "../locales/en";
+import ja from "../locales/ja";
 
 const translations = {
   en,
-  ja
+  ja,
+};
+
+function readStoredLocale() {
+  try {
+    const stored = localStorage.getItem("app-locale");
+    return translations[stored] ? stored : "en";
+  } catch {
+    return "en";
+  }
 }
 
-// Load saved locale from localStorage, default to 'en'
-const savedLocale = localStorage.getItem('app-locale') || 'en'
-const currentLocale = ref(savedLocale)
+const currentLocale = ref(readStoredLocale());
 
-// Currency is automatically set based on locale (en -> USD, ja -> JPY)
-const currentCurrency = computed(() => {
-  return currentLocale.value === 'ja' ? 'JPY' : 'USD'
-})
+const currentCurrency = computed(() =>
+  currentLocale.value === "ja" ? "JPY" : "USD",
+);
+
+function resolve(localeKey, keys) {
+  let value = translations[localeKey];
+  for (const k of keys) {
+    if (value && typeof value === "object") {
+      value = value[k];
+    } else {
+      return undefined;
+    }
+  }
+  return typeof value === "string" ? value : undefined;
+}
+
+function replacePlaceholders(text, params) {
+  return text.replace(/\{(\w+)\}/g, (match, key) =>
+    params[key] !== undefined ? params[key] : match,
+  );
+}
 
 export function useI18n() {
   const t = (key, params = {}) => {
-    const keys = key.split('.')
-    let value = translations[currentLocale.value]
-
-    for (const k of keys) {
-      if (value && typeof value === 'object') {
-        value = value[k]
-      } else {
-        // If translation not found, try English as fallback
-        if (currentLocale.value !== 'en') {
-          let fallback = translations.en
-          for (const fk of keys) {
-            if (fallback && typeof fallback === 'object') {
-              fallback = fallback[fk]
-            } else {
-              break
-            }
-          }
-          if (fallback && typeof fallback === 'string') {
-            return replacePlaceholders(fallback, params)
-          }
-        }
-        // If still not found, return the key itself
-        return key
-      }
+    const keys = key.split(".");
+    const primary = resolve(currentLocale.value, keys);
+    if (primary !== undefined) return replacePlaceholders(primary, params);
+    if (currentLocale.value !== "en") {
+      const fallback = resolve("en", keys);
+      if (fallback !== undefined) return replacePlaceholders(fallback, params);
     }
-
-    if (typeof value === 'string') {
-      return replacePlaceholders(value, params)
-    }
-
-    return key
-  }
-
-  const replacePlaceholders = (text, params) => {
-    return text.replace(/\{(\w+)\}/g, (match, key) => {
-      return params[key] !== undefined ? params[key] : match
-    })
-  }
+    return key;
+  };
 
   const setLocale = (locale) => {
     if (translations[locale]) {
-      currentLocale.value = locale
-      localStorage.setItem('app-locale', locale)
+      currentLocale.value = locale;
+      try {
+        localStorage.setItem("app-locale", locale);
+      } catch {
+        // ignore (private mode etc.)
+      }
     }
-  }
+  };
 
-  const availableLocales = computed(() => Object.keys(translations))
+  const availableLocales = computed(() => Object.keys(translations));
 
   const localeName = computed(() => {
-    const names = {
-      en: 'English',
-      ja: '日本語'
-    }
-    return names[currentLocale.value] || currentLocale.value
-  })
+    const names = { en: "English", ja: "日本語" };
+    return names[currentLocale.value] || currentLocale.value;
+  });
 
-  // Translate product names
   const translateProductName = (productName) => {
-    if (currentLocale.value === 'ja' && translations.ja.productNames[productName]) {
-      return translations.ja.productNames[productName]
-    }
-    return productName
-  }
+    const map = translations[currentLocale.value]?.productNames;
+    return (map && map[productName]) || productName;
+  };
 
-  // Translate customer names
   const translateCustomerName = (customerName) => {
-    if (currentLocale.value === 'ja' && translations.ja.customerNames[customerName]) {
-      return translations.ja.customerNames[customerName]
-    }
-    return customerName
-  }
+    const map = translations[currentLocale.value]?.customerNames;
+    return (map && map[customerName]) || customerName;
+  };
 
-  // Translate warehouse names
   const translateWarehouse = (warehouseName) => {
-    if (currentLocale.value === 'ja') {
-      // Handle city names
+    if (currentLocale.value === "ja") {
       const cityMap = {
-        'San Francisco': 'サンフランシスコ',
-        'London': 'ロンドン',
-        'Tokyo': '東京'
+        "San Francisco": "サンフランシスコ",
+        London: "ロンドン",
+        Tokyo: "東京",
+      };
+      if (cityMap[warehouseName]) return cityMap[warehouseName];
+      if (warehouseName && warehouseName.startsWith("Warehouse ")) {
+        return warehouseName.replace("Warehouse ", "倉庫");
       }
-
-      if (cityMap[warehouseName]) {
-        return cityMap[warehouseName]
-      }
-
-      // Handle "Warehouse X-##" pattern
-      if (warehouseName.startsWith('Warehouse ')) {
-        return warehouseName.replace('Warehouse ', '倉庫')
-      }
-
-      return warehouseName
     }
-    return warehouseName
-  }
+    return warehouseName;
+  };
 
   return {
     t,
@@ -123,6 +104,6 @@ export function useI18n() {
     localeName,
     translateProductName,
     translateCustomerName,
-    translateWarehouse
-  }
+    translateWarehouse,
+  };
 }

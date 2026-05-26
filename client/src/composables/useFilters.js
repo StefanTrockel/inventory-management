@@ -1,56 +1,46 @@
-import { ref, computed } from 'vue'
+import { ref, computed } from "vue";
 
-// Shared filter state (singleton pattern)
-const selectedPeriod = ref('all')
-const selectedLocation = ref('all')
-const selectedCategory = ref('all')
-const selectedStatus = ref('all')
+const selectedPeriod = ref("all");
+const selectedLocation = ref("all");
+const selectedCategory = ref("all");
+const selectedStatus = ref("all");
+
+export const FILTER_KEYS = ["period", "location", "category", "status"];
+
+export function resetFilters() {
+  selectedPeriod.value = "all";
+  selectedLocation.value = "all";
+  selectedCategory.value = "all";
+  selectedStatus.value = "all";
+}
 
 export function useFilters() {
-  // Check if any filters are active
-  const hasActiveFilters = computed(() => {
-    return selectedPeriod.value !== 'all' ||
-           selectedLocation.value !== 'all' ||
-           selectedCategory.value !== 'all' ||
-           selectedStatus.value !== 'all'
-  })
+  const hasActiveFilters = computed(
+    () =>
+      selectedPeriod.value !== "all" ||
+      selectedLocation.value !== "all" ||
+      selectedCategory.value !== "all" ||
+      selectedStatus.value !== "all",
+  );
 
-  // Reset all filters to default
-  const resetFilters = () => {
-    selectedPeriod.value = 'all'
-    selectedLocation.value = 'all'
-    selectedCategory.value = 'all'
-    selectedStatus.value = 'all'
-  }
-
-  // Get current filters as an object for API calls
   const getCurrentFilters = () => {
-    const filters = {
-      warehouse: selectedLocation.value,
-      category: selectedCategory.value,
-      status: selectedStatus.value
-    }
-
-    // Map period to month format for API
-    if (selectedPeriod.value !== 'all') {
-      filters.month = selectedPeriod.value
-    }
-
-    return filters
-  }
+    const filters = {};
+    if (selectedLocation.value !== "all")
+      filters.warehouse = selectedLocation.value;
+    if (selectedCategory.value !== "all")
+      filters.category = selectedCategory.value;
+    if (selectedStatus.value !== "all") filters.status = selectedStatus.value;
+    if (selectedPeriod.value !== "all") filters.month = selectedPeriod.value;
+    return filters;
+  };
 
   return {
-    // State
     selectedPeriod,
     selectedLocation,
     selectedCategory,
     selectedStatus,
-
-    // Computed
     hasActiveFilters,
-
-    // Methods
     resetFilters,
-    getCurrentFilters
-  }
+    getCurrentFilters,
+  };
 }

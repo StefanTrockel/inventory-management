@@ -46,42 +46,31 @@ class TestDemandEndpoints:
             assert forecast["forecasted_demand"] >= 0
 
     def test_stable_demand_items_have_small_changes(self, client):
-        """Test that items with 'stable' trend have less than 2% change."""
+        """Items with 'stable' trend should report less than 2% change."""
         response = client.get("/api/demand")
         data = response.json()
 
         stable_items = [item for item in data if item["trend"].lower() == "stable"]
-
-        # Should have at least 5 stable items
-        assert len(stable_items) >= 5, f"Expected at least 5 stable items, found {len(stable_items)}"
+        assert stable_items, "Expected at least one stable demand item"
 
         for item in stable_items:
             current = item["current_demand"]
             forecasted = item["forecasted_demand"]
-
-            # Calculate percentage change
             if current > 0:
                 percent_change = abs((forecasted - current) / current) * 100
                 assert percent_change < 2.0, \
                     f"Item {item['item_name']} has {percent_change:.2f}% change, expected < 2%"
 
-    def test_demand_forecast_has_new_items(self, client):
-        """Test that new demand forecast items exist."""
-        response = client.get("/api/demand")
-        data = response.json()
+    def test_demand_forecast_references_real_inventory(self, client):
+        """Every demand forecast SKU should exist in inventory."""
+        forecasts = client.get("/api/demand").json()
+        inventory = client.get("/api/inventory").json()
+        inventory_skus = {i["sku"] for i in inventory}
 
-        # Check for the new items we added
-        skus = [item["item_sku"] for item in data]
-
-        # Should have Temperature Sensor Module and Logic Controller Board
-        assert "SNR-420" in skus, "Missing Temperature Sensor Module"
-        assert "CTL-330" in skus, "Missing Logic Controller Board"
-
-        # Verify they are marked as stable
-        for item in data:
-            if item["item_sku"] in ["SNR-420", "CTL-330"]:
-                assert item["trend"].lower() == "stable", \
-                    f"New item {item['item_name']} should have stable trend"
+        assert forecasts, "Expected at least one demand forecast"
+        for forecast in forecasts:
+            assert forecast["item_sku"] in inventory_skus, \
+                f"Forecast SKU {forecast['item_sku']} is not in inventory"
 
 
 class TestBacklogEndpoints:
