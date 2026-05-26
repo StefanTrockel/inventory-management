@@ -214,13 +214,13 @@ export default {
     };
 
     const getChangeColor = (forecast) => {
-      if (forecast.current_demand === 0) return "#3b82f6";
+      if (forecast.current_demand === 0) return "var(--chart-1)";
       const change = forecast.forecasted_demand - forecast.current_demand;
       const changePercent = Math.abs((change / forecast.current_demand) * 100);
-      if (changePercent <= 2) return "#3b82f6";
-      if (change > 0) return "#10b981";
-      if (change < 0) return "#ef4444";
-      return "#3b82f6";
+      if (changePercent <= 2) return "var(--chart-1)";
+      if (change > 0) return "var(--success)";
+      if (change < 0) return "var(--danger)";
+      return "var(--chart-1)";
     };
 
     const translatePeriod = (period) => {
@@ -259,143 +259,154 @@ export default {
 .demand-trend-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  gap: var(--space-6);
+  margin-bottom: var(--space-7);
 }
 
 .trend-card {
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 1.5rem;
-  transition: all 0.2s ease;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 
 .trend-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
 }
 
 .increasing-card {
-  border-left: 4px solid #10b981;
+  border-left: 4px solid var(--success);
 }
 
 .stable-card {
-  border-left: 4px solid #3b82f6;
+  border-left: 4px solid var(--accent);
 }
 
 .decreasing-card {
-  border-left: 4px solid #ef4444;
+  border-left: 4px solid var(--danger);
 }
 
 .trend-header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #f1f5f9;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-faint);
 }
 
 .trend-icon {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  font-size: 1.75rem;
+  border-radius: var(--radius-md);
+  font-size: 1.5rem;
   font-weight: 700;
   flex-shrink: 0;
 }
 
 .increasing-card .trend-icon {
-  background: #d1fae5;
-  color: #059669;
+  background: var(--success-bg);
+  color: var(--success-text);
 }
 
 .stable-card .trend-icon {
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-subtle);
+  color: var(--accent);
 }
 
 .decreasing-card .trend-icon {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--danger-bg);
+  color: var(--danger-text);
 }
 
 .trend-label {
-  font-size: 0.875rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 .trend-count {
   font-size: 1.5rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-top: 0.25rem;
+  font-weight: 800;
+  color: var(--text-strong);
+  margin-top: var(--space-1);
+  letter-spacing: -0.02em;
+  font-feature-settings: 'tnum' 1;
 }
 
 .trend-items {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .trend-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.75rem;
-  background: #f8fafc;
-  border-radius: 6px;
-  transition: background 0.2s;
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  transition: background var(--dur-fast) var(--ease);
 }
 
 .trend-item:hover {
-  background: #f1f5f9;
+  background: var(--bg-hover);
 }
 
 .item-name {
   font-size: 0.875rem;
-  color: #0f172a;
+  color: var(--text-primary);
   font-weight: 500;
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-right: 1rem;
+  margin-right: var(--space-4);
 }
 
 .item-change {
   font-size: 0.813rem;
   font-weight: 700;
   flex-shrink: 0;
+  font-feature-settings: 'tnum' 1;
 }
 
 .increasing-card .item-change {
-  color: #059669;
+  color: var(--success-text);
 }
 
 .stable-card .item-change {
-  color: #3b82f6;
+  color: var(--accent);
 }
 
 .decreasing-card .item-change {
-  color: #dc2626;
+  color: var(--danger-text);
 }
 
 .item-change.neutral {
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .more-items {
   font-size: 0.813rem;
-  color: #64748b;
+  color: var(--text-muted);
   font-style: italic;
   text-align: center;
-  padding: 0.5rem;
+  padding: var(--space-2);
+}
+
+/* SKU mono in table */
+:deep(td:first-child strong) {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
 }
 </style>

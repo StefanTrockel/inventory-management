@@ -151,7 +151,7 @@
                     cy="100"
                     r="65"
                     fill="none"
-                    stroke="#e2e8f0"
+                    stroke="var(--chart-grid)"
                     stroke-width="25"
                   />
                   <circle
@@ -159,7 +159,7 @@
                     cy="100"
                     r="65"
                     fill="none"
-                    stroke="#10b981"
+                    stroke="#0f9d6b"
                     stroke-width="25"
                     :stroke-dasharray="`${getCircleSegment(statusData.delivered)} 408`"
                     stroke-dashoffset="0"
@@ -170,7 +170,7 @@
                     cy="100"
                     r="65"
                     fill="none"
-                    stroke="#3b82f6"
+                    stroke="#4f46e5"
                     stroke-width="25"
                     :stroke-dasharray="`${getCircleSegment(statusData.shipped)} 408`"
                     :stroke-dashoffset="`-${getCircleSegment(statusData.delivered)}`"
@@ -192,7 +192,7 @@
                     cy="100"
                     r="65"
                     fill="none"
-                    stroke="#ef4444"
+                    stroke="#e11d48"
                     stroke-width="25"
                     :stroke-dasharray="`${getCircleSegment(statusData.backordered)} 408`"
                     :stroke-dashoffset="`-${getCircleSegment(statusData.delivered) + getCircleSegment(statusData.shipped) + getCircleSegment(statusData.processing)}`"
@@ -217,11 +217,11 @@
                 </svg>
                 <div class="donut-legend-compact">
                   <div class="legend-item-compact">
-                    <span class="legend-dot" style="background: #10b981"></span
+                    <span class="legend-dot" style="background: #0f9d6b"></span
                     >{{ t("status.delivered") }}
                   </div>
                   <div class="legend-item-compact">
-                    <span class="legend-dot" style="background: #3b82f6"></span
+                    <span class="legend-dot" style="background: #4f46e5"></span
                     >{{ t("status.shipped") }}
                   </div>
                   <div class="legend-item-compact">
@@ -229,7 +229,7 @@
                     >{{ t("status.processing") }}
                   </div>
                   <div class="legend-item-compact">
-                    <span class="legend-dot" style="background: #ef4444"></span
+                    <span class="legend-dot" style="background: #e11d48"></span
                     >{{ t("status.backordered") }}
                   </div>
                 </div>
@@ -376,11 +376,11 @@
               </thead>
               <tbody>
                 <tr v-for="item in backlogItems" :key="item.id">
-                  <td @click="showBacklogDetail(item)" style="cursor: pointer">
-                    <strong>{{ item.order_id }}</strong>
+                  <td @click="showBacklogDetail(item)" style="cursor: pointer" class="cell-id">
+                    {{ item.order_id }}
                   </td>
-                  <td @click="showBacklogDetail(item)" style="cursor: pointer">
-                    <strong>{{ item.item_sku }}</strong>
+                  <td @click="showBacklogDetail(item)" style="cursor: pointer" class="cell-id">
+                    {{ item.item_sku }}
                   </td>
                   <td @click="showBacklogDetail(item)" style="cursor: pointer">
                     {{ translateProductName(item.item_name) }}
@@ -402,7 +402,7 @@
                   <td @click="showBacklogDetail(item)" style="cursor: pointer">
                     <span
                       :style="{
-                        color: item.days_delayed > 7 ? '#ef4444' : '#f59e0b',
+                        color: item.days_delayed > 7 ? 'var(--danger)' : 'var(--warning)',
                         fontWeight: 600,
                       }"
                     >
@@ -465,7 +465,7 @@
                   <td>
                     <strong>{{ translateProductName(item.name) }}</strong>
                   </td>
-                  <td>{{ item.sku }}</td>
+                  <td class="cell-id">{{ item.sku }}</td>
                   <td>{{ translateCategory(item.category) }}</td>
                   <td>{{ item.unitsOrdered }}</td>
                   <td>
@@ -639,8 +639,8 @@ export default {
       // Filter inventory items to only include those with orders in the selected period
       const categoryMap = {};
 
-      // Use a single neutral slate/gray color for all categories
-      const singleColor = "#64748b"; // Neutral slate gray color
+      // Use accent color for all category bars (design token via inline style)
+      const singleColor = "var(--accent)";
 
       // Get SKUs from orders in the filtered time period
       const orderedSkus = new Set();
@@ -996,90 +996,108 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-6);
 }
 
 .header-meta {
   font-size: 0.813rem;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .kpi-section {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
 }
 
 .section-title {
-  font-size: 1rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  color: #475569;
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 1rem;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-4);
 }
 
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .kpi-card {
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  box-shadow: var(--shadow-xs);
+  animation: fadeRise 350ms var(--ease) both;
+}
+
+.kpi-card:nth-child(1) { animation-delay: 0ms; }
+.kpi-card:nth-child(2) { animation-delay: 40ms; }
+.kpi-card:nth-child(3) { animation-delay: 80ms; }
+.kpi-card:nth-child(4) { animation-delay: 120ms; }
+.kpi-card:nth-child(5) { animation-delay: 160ms; }
+
+@keyframes fadeRise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kpi-card { animation: none; }
 }
 
 .kpi-header {
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-3);
 }
 
 .kpi-label {
-  font-size: 0.813rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.06em;
 }
 
 .kpi-value {
   font-size: 2rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.025em;
+  font-weight: 800;
+  color: var(--text-strong);
+  margin-bottom: var(--space-2);
+  letter-spacing: -0.03em;
+  font-feature-settings: 'tnum' 1, 'cv11' 1;
 }
 
 .kpi-goal {
   font-size: 0.813rem;
-  color: #64748b;
-  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
 }
 
 .kpi-progress-bar {
   width: 100%;
   height: 6px;
-  background: #f1f5f9;
-  border-radius: 3px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-full);
   overflow: hidden;
 }
 
 .kpi-progress {
   height: 100%;
-  background: #3b82f6;
-  border-radius: 3px;
-  transition: width 0.6s ease;
+  background: var(--accent);
+  border-radius: var(--radius-full);
+  transition: width 0.6s var(--ease);
 }
 
 .kpi-progress.success {
-  background: #10b981;
+  background: var(--success);
 }
 
 .charts-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
 }
 
 .chart-card.full-width {
@@ -1087,7 +1105,7 @@ export default {
 }
 
 .chart-content {
-  padding: 1rem;
+  padding: var(--space-4);
 }
 
 .donut-chart {
@@ -1113,22 +1131,22 @@ export default {
   align-items: center;
   gap: 0.625rem;
   font-size: 0.875rem;
-  color: #475569;
+  color: var(--text-secondary);
 }
 
 .legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
 }
 
 /* Order Health Dashboard Styles */
 .order-health-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: var(--space-6);
   align-items: center;
-  padding: 1rem;
+  padding: var(--space-4);
   min-height: 240px;
 }
 
@@ -1137,8 +1155,8 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: 0 1rem;
+  gap: var(--space-4);
+  padding: 0 var(--space-4);
 }
 
 .donut-svg-compact {
@@ -1147,38 +1165,39 @@ export default {
 }
 
 .donut-center-label {
-  font-size: 12px;
-  fill: #64748b;
+  font-size: 11px;
+  fill: var(--chart-axis);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.06em;
 }
 
 .donut-center-value {
   font-size: 36px;
-  fill: #0f172a;
-  font-weight: 700;
+  fill: var(--text-strong);
+  font-weight: 800;
+  font-feature-settings: 'tnum' 1;
 }
 
 .donut-legend-compact {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.625rem 1.25rem;
+  gap: var(--space-2) var(--space-5);
 }
 
 .legend-item-compact {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  color: #475569;
+  gap: var(--space-2);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .order-health-metrics {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: var(--space-5);
   justify-content: center;
   align-items: center;
 }
@@ -1186,49 +1205,50 @@ export default {
 .health-metric {
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
+  gap: var(--space-1);
   text-align: center;
   width: 100%;
 }
 
 .health-metric-label {
-  font-size: 0.688rem;
-  color: #64748b;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 .health-metric-value {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-strong);
   letter-spacing: -0.025em;
+  font-feature-settings: 'tnum' 1;
 }
 
 .metric-good {
-  color: #10b981;
+  color: var(--success);
 }
 
 .metric-warning {
-  color: #f59e0b;
+  color: var(--warning);
 }
 
 .metric-bad {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .horizontal-bar-chart {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 0 1rem;
+  gap: var(--space-6);
+  padding: 0 var(--space-4);
 }
 
 .h-bar-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .h-bar-label {
@@ -1236,15 +1256,15 @@ export default {
   min-width: 120px;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #475569;
+  color: var(--text-secondary);
   flex-shrink: 0;
 }
 
 .h-bar-container {
   flex: 1;
   height: 32px;
-  background: #f8fafc;
-  border-radius: 6px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
@@ -1254,18 +1274,19 @@ export default {
   align-items: center;
   justify-content: flex-end;
   padding-right: 0.75rem;
-  transition: width 0.6s ease;
+  transition: width 0.6s var(--ease);
 }
 
 .h-bar-value {
   font-size: 0.813rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-inverse);
+  font-feature-settings: 'tnum' 1;
 }
 
 .line-chart {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--space-6);
   height: 280px;
 }
 
@@ -1273,10 +1294,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-right: 1rem;
-  font-size: 0.75rem;
-  color: #94a3b8;
-  border-right: 1px solid #e2e8f0;
+  padding-right: var(--space-4);
+  font-size: 0.6875rem;
+  color: var(--chart-axis);
+  border-right: 1px solid var(--chart-grid);
 }
 
 .line-chart-area {
@@ -1284,7 +1305,7 @@ export default {
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .line-bar-group {
@@ -1293,7 +1314,7 @@ export default {
   align-items: center;
   flex: 1;
   max-width: 80px;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .line-bar-wrapper {
@@ -1309,230 +1330,112 @@ export default {
   width: 100%;
   max-width: 60px;
   min-height: 8px;
-  background: #3b82f6;
-  border-radius: 6px 6px 0 0;
-  transition: all 0.3s ease;
+  background: var(--chart-1);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: all var(--dur) var(--ease);
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
 
 .line-bar.empty-bar {
-  background: #e2e8f0;
-  box-shadow: none;
+  background: var(--border);
   min-height: 4px;
 }
 
 .line-bar:hover {
-  background: #2563eb;
+  background: var(--accent-hover);
   transform: scaleY(1.05);
 }
 
 .line-bar.empty-bar:hover {
-  background: #cbd5e1;
+  background: var(--border-strong);
   transform: none;
 }
 
 .line-bar-label {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--chart-axis);
   white-space: nowrap;
 }
 
 .no-data {
-  padding: 2rem;
+  padding: var(--space-7);
   text-align: center;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.875rem;
 }
 
 .no-backlog {
-  padding: 3rem;
+  padding: var(--space-8);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .success-icon {
   width: 48px;
   height: 48px;
-  color: #10b981;
+  color: var(--success);
 }
 
 .no-backlog-text {
   font-size: 1.125rem;
-  color: #10b981;
+  color: var(--success-text);
   font-weight: 600;
   margin: 0;
 }
 
 .clickable-row {
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: background-color var(--dur-fast) var(--ease);
 }
 
 .clickable-row:hover {
-  background: #eff6ff !important;
+  background: var(--bg-hover) !important;
 }
 
-/* Tasks Card Styles */
-.tasks-card {
-  margin-bottom: 2rem;
-}
-
-.tasks-content {
-  padding: 1.5rem;
-}
-
-.task-input-container {
-  display: flex;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.task-input {
-  flex: 1;
-  padding: 0.75rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  transition: border-color 0.2s ease;
-}
-
-.task-input:focus {
-  outline: none;
-  border-color: #667eea;
-}
-
-.task-add-btn {
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.task-add-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-}
-
-.task-add-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.no-tasks {
-  text-align: center;
-  padding: 2rem;
-  color: #64748b;
-  font-style: italic;
-}
-
-.tasks-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.task-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  background: #f8fafc;
-  border-radius: 8px;
-  border: 2px solid transparent;
-  transition: all 0.2s ease;
-}
-
-.task-item:hover {
-  border-color: #e2e8f0;
-  background: white;
-}
-
-.task-item.completed {
-  opacity: 0.6;
-}
-
-.task-item.completed .task-text {
-  text-decoration: line-through;
-  color: #94a3b8;
-}
-
-.task-checkbox {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  accent-color: #667eea;
-}
-
-.task-text {
-  flex: 1;
-  cursor: pointer;
-  user-select: none;
-  color: #0f172a;
-  font-size: 0.95rem;
-}
-
-.task-delete-btn {
-  width: 28px;
-  height: 28px;
-  background: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1.25rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-.task-delete-btn:hover {
-  background: #dc2626;
-  transform: scale(1.1);
-}
-
+/* PO Buttons */
 .po-button {
-  padding: 0.5rem 1rem;
+  padding: var(--space-2) var(--space-4);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.813rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--dur-fast) var(--ease);
   white-space: nowrap;
 }
 
 .po-button.create {
-  background: #3b82f6;
-  color: white;
+  background: var(--accent);
+  color: var(--text-inverse);
 }
 
 .po-button.create:hover {
-  background: #2563eb;
+  background: var(--accent-hover);
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+  box-shadow: var(--shadow-sm);
 }
 
 .po-button.view {
-  background: #64748b;
-  color: white;
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
 }
 
 .po-button.view:hover {
-  background: #475569;
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(100, 116, 139, 0.3);
+}
+
+/* Mono identifiers */
+.cell-id {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  white-space: nowrap;
 }
 </style>

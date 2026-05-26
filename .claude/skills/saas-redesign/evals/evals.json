@@ -1,0 +1,12 @@
+{
+  "skill_name": "saas-redesign",
+  "evals": [
+    {
+      "id": 1,
+      "eval_name": "modernize-with-sidebar",
+      "prompt": "Our inventory dashboard UI is starting to feel a bit dated. Can you redesign it to look more like a modern SaaS product? I'd like the navigation moved into a vertical sidebar on the left instead of that top bar, and the spacing/colors should feel more consistent across pages. Don't change any of the data or business logic — just the layout and styling.",
+      "expected_output": "App.vue restructured with a left sidebar (logo top, nav items vertical, profile/language bottom). A :root token block with --color-*, --space-*, --radius-* variables. Global styles and at least some view styles tokenized. FilterBar moved into the main content area. No changes to setup() logic or routing.",
+      "files": []
+    }
+  ]
+}

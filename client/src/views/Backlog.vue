@@ -68,7 +68,8 @@
                 <td>
                   <span
                     :style="{
-                      color: item.days_delayed > 7 ? '#ef4444' : '#f59e0b',
+                      color: item.days_delayed > 7 ? 'var(--danger)' : 'var(--warning)',
+                      fontWeight: 600,
                     }"
                   >
                     {{ item.days_delayed }} {{ t("backlog.days") }}
@@ -158,10 +159,25 @@ export default {
 
 <style scoped>
 .empty-state {
-  padding: 3rem;
+  padding: var(--space-8);
   text-align: center;
-  color: #10b981;
+  color: var(--success-text);
   font-size: 1.125rem;
   font-weight: 600;
+}
+
+/* SKU mono */
+.table-container td:first-child strong {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* Shortage / days figures tabular */
+.table-container td:nth-child(3),
+.table-container td:nth-child(4),
+.table-container td:nth-child(6) {
+  font-feature-settings: 'tnum' 1;
 }
 </style>
