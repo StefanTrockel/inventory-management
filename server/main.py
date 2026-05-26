@@ -1,8 +1,9 @@
+from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Optional
 from pydantic import BaseModel
-from mock_data import inventory_items, orders, demand_forecasts, backlog_items, spending_summary, monthly_spending, category_spending, recent_transactions, purchase_orders
+from mock_data import inventory_items, orders, demand_forecasts, backlog_items, spending_summary, monthly_spending, category_spending, recent_transactions, purchase_orders, submitted_orders
 
 app = FastAPI(title="Factory Inventory Management System")
 
@@ -89,6 +90,31 @@ class DemandForecast(BaseModel):
     forecasted_demand: int
     trend: str
     period: str
+    unit_cost: Optional[float] = None
+    lead_time_days: Optional[int] = None
+
+
+class SubmittedOrderItem(BaseModel):
+    item_sku: str
+    item_name: str
+    quantity: int
+    unit_cost: float
+    lead_time_days: int
+
+
+class SubmittedOrder(BaseModel):
+    id: str
+    order_number: str
+    items: List[SubmittedOrderItem]
+    total_value: float
+    submitted_date: str
+    expected_delivery: str
+    max_lead_time_days: int
+    status: str
+
+
+class CreateSubmittedOrderRequest(BaseModel):
+    items: List[SubmittedOrderItem]
 
 class BacklogItem(BaseModel):
     id: str
@@ -152,6 +178,38 @@ def get_orders(
     filtered_orders = apply_filters(orders, warehouse, category, status)
     filtered_orders = filter_by_month(filtered_orders, month)
     return filtered_orders
+
+@app.get("/api/orders/submitted", response_model=List[SubmittedOrder])
+def get_submitted_orders():
+    """Get all restocking orders submitted via the Restocking tab."""
+    return submitted_orders
+
+
+@app.post("/api/orders/submit", response_model=SubmittedOrder, status_code=201)
+def submit_restocking_order(payload: CreateSubmittedOrderRequest):
+    """Submit a new restocking order built from demand-forecast recommendations."""
+    if not payload.items:
+        raise HTTPException(status_code=400, detail="Order must contain at least one item.")
+
+    submitted_at = datetime.now()
+    max_lead = max(item.lead_time_days for item in payload.items)
+    expected_delivery = submitted_at + timedelta(days=max_lead)
+    total_value = sum(item.quantity * item.unit_cost for item in payload.items)
+
+    next_seq = len(submitted_orders) + 1
+    new_order = {
+        "id": f"sub-{int(submitted_at.timestamp())}-{next_seq}",
+        "order_number": f"RST-{submitted_at.strftime('%Y%m%d')}-{next_seq:03d}",
+        "items": [item.model_dump() for item in payload.items],
+        "total_value": round(total_value, 2),
+        "submitted_date": submitted_at.strftime("%Y-%m-%d"),
+        "expected_delivery": expected_delivery.strftime("%Y-%m-%d"),
+        "max_lead_time_days": max_lead,
+        "status": "Submitted",
+    }
+    submitted_orders.insert(0, new_order)
+    return new_order
+
 
 @app.get("/api/orders/{order_id}", response_model=Order)
 def get_order(order_id: str):
@@ -305,5 +363,7 @@ def get_monthly_trends():
     return result
 
 if __name__ == "__main__":
+    import os
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    port = int(os.environ.get("PORT", 8001))
+    uvicorn.run(app, host="0.0.0.0", port=port)

@@ -6,6 +6,7 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    restocking: 'Restocking',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
@@ -126,6 +127,19 @@ export default {
       status: 'Status',
       expectedDelivery: 'Expected Delivery',
       actualDelivery: 'Actual Delivery'
+    },
+    submittedOrders: {
+      title: 'Submitted Restocking Orders',
+      orderNumber: 'Order #',
+      items: 'Items',
+      submittedDate: 'Submitted',
+      expectedDelivery: 'Expected Delivery',
+      leadTime: 'Lead Time',
+      totalValue: 'Total Value',
+      status: 'Status',
+      days: 'days',
+      empty: 'No submitted orders yet.',
+      submitted: 'Submitted'
     }
   },
 
@@ -188,6 +202,45 @@ export default {
     }
   },
 
+  // Restocking
+  restocking: {
+    title: 'Restocking',
+    description: 'Set a budget and place restocking orders based on demand forecast.',
+    budget: {
+      title: 'Restocking Budget',
+      setBudget: 'Set Your Budget',
+      recommendedSpend: 'Recommended Spend',
+      of: 'of',
+      budget: 'budget'
+    },
+    summary: {
+      items: 'Items',
+      units: 'Total Units',
+      cost: 'Total Cost'
+    },
+    recommendations: {
+      title: 'Recommended Items',
+      sku: 'SKU',
+      item: 'Item',
+      forecastedDemand: 'Forecasted Demand',
+      recommendedQty: 'Recommended Qty',
+      unitCost: 'Unit Cost',
+      subtotal: 'Subtotal',
+      leadTime: 'Lead Time',
+      trend: 'Trend',
+      days: 'days',
+      empty: 'Set a higher budget to see recommendations.'
+    },
+    placeOrder: 'Place Order',
+    submitting: 'Submitting...',
+    success: {
+      submitted: 'Order submitted',
+      expectedDelivery: 'Expected delivery',
+      viewOrders: 'View in Orders'
+    },
+    error: 'Failed to submit order'
+  },
+
   // Filters
   filters: {
     timePeriod: 'Time Period',
@@ -206,7 +259,8 @@ export default {
     backordered: 'Backordered',
     inStock: 'In Stock',
     lowStock: 'Low Stock',
-    adequate: 'Adequate'
+    adequate: 'Adequate',
+    submitted: 'Submitted'
   },
 
   // Trends
