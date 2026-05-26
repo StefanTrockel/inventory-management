@@ -8,6 +8,52 @@
     <div v-if="loading" class="loading">{{ t('common.loading') }}</div>
     <div v-else-if="error" class="error">{{ error }}</div>
     <div v-else>
+      <div v-if="submittedOrders.length > 0" class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{ t('orders.submittedOrders.title') }} ({{ submittedOrders.length }})</h3>
+        </div>
+        <div class="table-container">
+          <table class="submitted-orders-table">
+            <thead>
+              <tr>
+                <th class="scol-order-number">{{ t('orders.submittedOrders.orderNumber') }}</th>
+                <th class="scol-items">{{ t('orders.submittedOrders.items') }}</th>
+                <th class="scol-date">{{ t('orders.submittedOrders.submittedDate') }}</th>
+                <th class="scol-date">{{ t('orders.submittedOrders.expectedDelivery') }}</th>
+                <th class="scol-lead-time">{{ t('orders.submittedOrders.leadTime') }}</th>
+                <th class="scol-value">{{ t('orders.submittedOrders.totalValue') }}</th>
+                <th class="scol-status">{{ t('orders.submittedOrders.status') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="order in submittedOrders" :key="order.id">
+                <td class="scol-order-number"><strong>{{ order.order_number }}</strong></td>
+                <td class="scol-items">
+                  <details class="items-details">
+                    <summary class="items-summary">
+                      {{ t('orders.itemsCount', { count: order.items.length }) }}
+                    </summary>
+                    <div class="items-dropdown">
+                      <div v-for="item in order.items" :key="item.item_sku" class="item-entry">
+                        <span class="item-name">{{ item.item_name }}</span>
+                        <span class="item-meta">{{ t('orders.quantity') }}: {{ item.quantity }} @ {{ currencySymbol }}{{ item.unit_cost }} &mdash; {{ t('orders.submittedOrders.leadTime') }}: {{ item.lead_time_days }} {{ t('orders.submittedOrders.days') }}</span>
+                      </div>
+                    </div>
+                  </details>
+                </td>
+                <td class="scol-date">{{ formatDate(order.submitted_date) }}</td>
+                <td class="scol-date">{{ formatDate(order.expected_delivery) }}</td>
+                <td class="scol-lead-time">{{ order.max_lead_time_days }} {{ t('orders.submittedOrders.days') }}</td>
+                <td class="scol-value"><strong>{{ currencySymbol }}{{ order.total_value.toLocaleString() }}</strong></td>
+                <td class="scol-status">
+                  <span class="badge info">{{ t('orders.submittedOrders.submitted') }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="stats-grid">
         <div class="stat-card success">
           <div class="stat-label">{{ t('status.delivered') }}</div>
@@ -95,6 +141,7 @@ export default {
     const loading = ref(true)
     const error = ref(null)
     const orders = ref([])
+    const submittedOrders = ref([])
 
     // Use shared filters
     const {
@@ -109,13 +156,23 @@ export default {
       try {
         loading.value = true
         const filters = getCurrentFilters()
-        const fetchedOrders = await api.getOrders(filters)
+        const [fetchedOrders, fetchedSubmitted] = await Promise.all([
+          api.getOrders(filters),
+          api.getSubmittedOrders()
+        ])
 
         // Sort orders by order_date (earliest first)
         orders.value = fetchedOrders.sort((a, b) => {
           const dateA = new Date(a.order_date)
           const dateB = new Date(b.order_date)
           return dateA - dateB
+        })
+
+        // Sort submitted orders by submitted_date descending (newest first)
+        submittedOrders.value = fetchedSubmitted.sort((a, b) => {
+          const dateA = new Date(a.submitted_date)
+          const dateB = new Date(b.submitted_date)
+          return dateB - dateA
         })
       } catch (err) {
         error.value = 'Failed to load orders: ' + err.message
@@ -160,6 +217,7 @@ export default {
       loading,
       error,
       orders,
+      submittedOrders,
       getOrdersByStatus,
       getOrderStatusClass,
       formatDate,
@@ -172,6 +230,36 @@ export default {
 </script>
 
 <style scoped>
+/* Submitted orders table */
+.submitted-orders-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.scol-order-number {
+  width: 170px;
+}
+
+.scol-items {
+  width: 180px;
+}
+
+.scol-date {
+  width: 130px;
+}
+
+.scol-lead-time {
+  width: 110px;
+}
+
+.scol-value {
+  width: 120px;
+}
+
+.scol-status {
+  width: 110px;
+}
+
 /* Fixed table layout to prevent column shifting */
 .orders-table {
   table-layout: fixed;
