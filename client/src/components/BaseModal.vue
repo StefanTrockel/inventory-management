@@ -71,47 +71,49 @@ export default {
 .base-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.45);
+  background: rgba(11, 15, 25, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 1rem;
+  padding: var(--space-4);
 }
 
 .base-modal-container {
-  background: #ffffff;
-  border-radius: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
   max-width: 640px;
   width: 100%;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-lg);
 }
 
 .base-modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--border);
 }
 
 .base-modal-title {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-strong);
   margin: 0;
+  letter-spacing: -0.02em;
 }
 
 .base-modal-close {
   background: transparent;
   border: none;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   line-height: 1;
-  color: #64748b;
+  color: var(--text-muted);
   cursor: pointer;
   padding: 0;
   width: 2rem;
@@ -119,29 +121,30 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
 }
 
 .base-modal-close:hover {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: var(--bg-hover);
+  color: var(--text-strong);
 }
 
 .base-modal-body {
-  padding: 1.25rem 1.5rem;
+  padding: var(--space-6);
   overflow-y: auto;
   flex: 1;
 }
 
 .base-modal-footer {
-  padding: 1rem 1.5rem;
-  border-top: 1px solid #e2e8f0;
-  background: #f8fafc;
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--border);
+  background: var(--bg-subtle);
 }
 
 .modal-enter-active,
 .modal-leave-active {
-  transition: opacity 0.18s ease;
+  transition: opacity var(--dur) var(--ease);
 }
 .modal-enter-from,
 .modal-leave-to {

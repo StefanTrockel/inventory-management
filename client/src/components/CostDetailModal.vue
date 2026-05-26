@@ -195,77 +195,78 @@ const getOverheadPercentage = () => {
 
 <style scoped>
 .cost-summary {
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-7);
 }
 
 .summary-card {
-  padding: 1.5rem;
-  border-radius: 10px;
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
   text-align: center;
 }
 
 .summary-card.total {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: white;
+  background: var(--accent);
+  color: var(--text-inverse);
 }
 
 .summary-label {
-  font-size: 0.875rem;
+  font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0.9;
-  margin-bottom: 0.5rem;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+  margin-bottom: var(--space-2);
 }
 
 .summary-value {
   font-size: 2.25rem;
-  font-weight: 700;
+  font-weight: 800;
+  font-feature-settings: 'tnum' 1;
 }
 
 .cost-breakdown {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .cost-item {
-  padding: 1.25rem;
-  border-radius: 10px;
-  border: 2px solid;
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  border: 1px solid;
 }
 
 .cost-item.procurement {
-  border-color: #93c5fd;
-  background: #eff6ff;
+  border-color: var(--accent-ring);
+  background: var(--accent-subtle);
 }
 
 .cost-item.operational {
-  border-color: #c4b5fd;
+  border-color: rgba(139, 92, 246, 0.25);
   background: #f5f3ff;
 }
 
 .cost-item.labor {
-  border-color: #86efac;
-  background: #f0fdf4;
+  border-color: rgba(15, 157, 107, 0.25);
+  background: var(--success-bg);
 }
 
 .cost-item.overhead {
-  border-color: #fcd34d;
-  background: #fffbeb;
+  border-color: rgba(245, 158, 11, 0.25);
+  background: var(--warning-bg);
 }
 
 .cost-header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-2);
 }
 
 .cost-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -273,22 +274,22 @@ const getOverheadPercentage = () => {
 }
 
 .cost-item.procurement .cost-icon {
-  background: #3b82f6;
+  background: var(--chart-1);
   color: white;
 }
 
 .cost-item.operational .cost-icon {
-  background: #8b5cf6;
+  background: var(--chart-6);
   color: white;
 }
 
 .cost-item.labor .cost-icon {
-  background: #10b981;
+  background: var(--chart-2);
   color: white;
 }
 
 .cost-item.overhead .cost-icon {
-  background: #f59e0b;
+  background: var(--chart-3);
   color: white;
 }
 
@@ -298,38 +299,39 @@ const getOverheadPercentage = () => {
 
 .cost-name {
   font-weight: 600;
-  color: #0f172a;
-  font-size: 1rem;
-  margin-bottom: 0.25rem;
+  color: var(--text-primary);
+  font-size: 0.938rem;
+  margin-bottom: var(--space-1);
 }
 
 .cost-amount {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-strong);
+  font-feature-settings: 'tnum' 1;
 }
 
 .cost-percentage {
-  font-size: 0.875rem;
-  color: #64748b;
+  font-size: 0.813rem;
+  color: var(--text-muted);
   font-weight: 500;
 }
 
 .btn-secondary {
-  padding: 0.625rem 1.25rem;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  padding: var(--space-3) var(--space-5);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   font-weight: 500;
   font-size: 0.875rem;
-  color: #334155;
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.15s ease;
-  font-family: inherit;
+  transition: all var(--dur-fast) var(--ease);
+  font-family: var(--font-sans);
 }
 
 .btn-secondary:hover {
-  background: #e2e8f0;
-  border-color: #cbd5e1;
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
 }
 </style>

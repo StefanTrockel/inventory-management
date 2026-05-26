@@ -281,21 +281,21 @@ export default {
 
 <style scoped>
 .budget-body {
-  padding: 1.25rem 0 0.5rem;
+  padding: var(--space-5) 0 var(--space-2);
 }
 
 .slider-section {
-  margin-bottom: 1.25rem;
+  margin-bottom: var(--space-5);
 }
 
 .slider-label {
   display: block;
-  font-size: 0.875rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  color: #475569;
-  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 .budget-slider {
@@ -303,11 +303,11 @@ export default {
   height: 6px;
   -webkit-appearance: none;
   appearance: none;
-  background: #e2e8f0;
-  border-radius: 3px;
+  background: var(--border);
+  border-radius: var(--radius-full);
   outline: none;
   cursor: pointer;
-  accent-color: #2563eb;
+  accent-color: var(--accent);
 }
 
 .budget-slider::-webkit-slider-thumb {
@@ -316,92 +316,95 @@ export default {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #2563eb;
+  background: var(--accent);
   cursor: pointer;
   border: 2px solid white;
-  box-shadow: 0 0 0 2px #2563eb, 0 2px 6px rgba(37, 99, 235, 0.3);
-  transition: box-shadow 0.2s;
+  box-shadow: 0 0 0 2px var(--accent), var(--shadow-sm);
+  transition: box-shadow var(--dur-fast) var(--ease);
 }
 
 .budget-slider::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2), 0 2px 8px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 0 0 3px var(--accent-ring), var(--shadow-sm);
 }
 
 .budget-slider::-moz-range-thumb {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #2563eb;
+  background: var(--accent);
   cursor: pointer;
   border: 2px solid white;
-  box-shadow: 0 0 0 2px #2563eb;
+  box-shadow: 0 0 0 2px var(--accent);
 }
 
 .slider-labels {
   display: flex;
   justify-content: space-between;
-  margin-top: 0.375rem;
+  margin-top: var(--space-1);
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .budget-display {
-  margin-bottom: 1.25rem;
+  margin-bottom: var(--space-5);
 }
 
 .budget-amount {
   font-size: 2rem;
-  font-weight: 700;
-  color: #2563eb;
-  letter-spacing: -0.025em;
-  margin-bottom: 0.25rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-1);
+  font-feature-settings: 'tnum' 1;
 }
 
 .budget-spend-line {
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .budget-spend-line strong {
-  color: #0f172a;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .budget-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e2e8f0;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
 }
 
 .stat-tile {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 0.875rem 1rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-4);
   text-align: center;
 }
 
 .stat-tile-value {
   font-size: 1.375rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-strong);
   letter-spacing: -0.025em;
+  font-feature-settings: 'tnum' 1;
 }
 
 .stat-tile-label {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-top: 0.25rem;
+  letter-spacing: 0.06em;
+  margin-top: var(--space-1);
 }
 
 .empty-state {
-  padding: 3rem 1.5rem;
+  padding: var(--space-8) var(--space-6);
   text-align: center;
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 0.938rem;
 }
 
@@ -409,10 +412,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 0 0;
-  margin-top: 1rem;
-  border-top: 1px solid #e2e8f0;
+  gap: var(--space-4);
+  padding: var(--space-4) 0 0;
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--border);
 }
 
 .action-bar-left {
@@ -420,45 +423,46 @@ export default {
 }
 
 .btn-primary {
-  padding: 0.625rem 1.5rem;
-  background: #2563eb;
-  color: white;
+  padding: var(--space-3) var(--space-6);
+  background: var(--accent);
+  color: var(--text-inverse);
   border: none;
-  border-radius: 8px;
-  font-size: 0.938rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
+  font-family: var(--font-sans);
+  transition: background var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
   white-space: nowrap;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #1d4ed8;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+  background: var(--accent-hover);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:disabled {
-  background: #cbd5e1;
-  color: #94a3b8;
+  background: var(--border-strong);
+  color: var(--text-muted);
   cursor: not-allowed;
   box-shadow: none;
 }
 
 .success-message {
   font-size: 0.875rem;
-  color: #065f46;
-  background: #d1fae5;
-  border: 1px solid #a7f3d0;
-  border-radius: 6px;
-  padding: 0.5rem 0.875rem;
+  color: var(--success-text);
+  background: var(--success-bg);
+  border: 1px solid var(--success);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-4);
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   flex-wrap: wrap;
 }
 
 .orders-link {
-  color: #2563eb;
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
 }
@@ -469,10 +473,18 @@ export default {
 
 .submit-error {
   font-size: 0.875rem;
-  color: #991b1b;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 6px;
-  padding: 0.5rem 0.875rem;
+  color: var(--danger-text);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-4);
+}
+
+/* SKU mono in table */
+.table-container td:first-child strong {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  white-space: nowrap;
 }
 </style>

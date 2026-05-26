@@ -88,87 +88,88 @@ const formatDate = (dateString) => {
 .profile-section {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--space-7);
 }
 
 .avatar-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
+  gap: var(--space-3);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border);
 }
 
 .avatar-xl {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-  color: white;
+  width: 88px;
+  height: 88px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: var(--text-inverse);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.75rem;
   letter-spacing: 0.025em;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 12px var(--accent-ring);
 }
 
 .profile-name {
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-strong);
   margin: 0;
+  letter-spacing: -0.02em;
 }
 
 .profile-job-title {
-  font-size: 1rem;
-  color: #64748b;
+  font-size: 0.938rem;
+  color: var(--text-muted);
   margin: 0;
 }
 
 .info-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  gap: var(--space-6);
 }
 
 .info-item {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .info-label {
-  font-size: 0.813rem;
+  font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #64748b;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
 }
 
 .info-value {
   font-size: 0.938rem;
-  color: #0f172a;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .btn-secondary {
-  padding: 0.625rem 1.25rem;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  padding: var(--space-3) var(--space-5);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   font-weight: 500;
   font-size: 0.875rem;
-  color: #334155;
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.15s ease;
-  font-family: inherit;
+  transition: all var(--dur-fast) var(--ease);
+  font-family: var(--font-sans);
 }
 
 .btn-secondary:hover {
-  background: #e2e8f0;
-  border-color: #cbd5e1;
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
 }
 </style>
