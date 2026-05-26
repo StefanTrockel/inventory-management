@@ -1,11 +1,11 @@
 <template>
   <div class="demand">
     <div class="page-header">
-      <h2>{{ t('demand.title') }}</h2>
-      <p>{{ t('demand.description') }}</p>
+      <h2>{{ t("demand.title") }}</h2>
+      <p>{{ t("demand.description") }}</p>
     </div>
 
-    <div v-if="loading" class="loading">{{ t('common.loading') }}</div>
+    <div v-if="loading" class="loading">{{ t("common.loading") }}</div>
     <div v-else-if="error" class="error">{{ error }}</div>
     <div v-else>
       <div class="demand-trend-cards">
@@ -13,17 +13,31 @@
           <div class="trend-header">
             <div class="trend-icon">↑</div>
             <div>
-              <div class="trend-label">{{ t('demand.increasingDemand') }}</div>
-              <div class="trend-count">{{ t('demand.itemsCount', { count: getForecastsByTrend('increasing').length }) }}</div>
+              <div class="trend-label">{{ t("demand.increasingDemand") }}</div>
+              <div class="trend-count">
+                {{
+                  t("demand.itemsCount", {
+                    count: getForecastsByTrend("increasing").length,
+                  })
+                }}
+              </div>
             </div>
           </div>
           <div class="trend-items">
-            <div v-for="item in getForecastsByTrend('increasing').slice(0, 5)" :key="item.id" class="trend-item">
+            <div
+              v-for="item in getForecastsByTrend('increasing').slice(0, 5)"
+              :key="item.id"
+              class="trend-item"
+            >
               <span class="item-name">{{ item.item_name }}</span>
-              <span class="item-change">+{{ getChangePercent(item) }}%</span>
+              <span class="item-change">{{ getChangePercent(item) }}</span>
             </div>
-            <div v-if="getForecastsByTrend('increasing').length > 5" class="more-items">
-              +{{ getForecastsByTrend('increasing').length - 5 }} {{ t('demand.more') }}
+            <div
+              v-if="getForecastsByTrend('increasing').length > 5"
+              class="more-items"
+            >
+              +{{ getForecastsByTrend("increasing").length - 5 }}
+              {{ t("demand.more") }}
             </div>
           </div>
         </div>
@@ -32,17 +46,33 @@
           <div class="trend-header">
             <div class="trend-icon">→</div>
             <div>
-              <div class="trend-label">{{ t('demand.stableDemand') }}</div>
-              <div class="trend-count">{{ t('demand.itemsCount', { count: getForecastsByTrend('stable').length }) }}</div>
+              <div class="trend-label">{{ t("demand.stableDemand") }}</div>
+              <div class="trend-count">
+                {{
+                  t("demand.itemsCount", {
+                    count: getForecastsByTrend("stable").length,
+                  })
+                }}
+              </div>
             </div>
           </div>
           <div class="trend-items">
-            <div v-for="item in getForecastsByTrend('stable').slice(0, 5)" :key="item.id" class="trend-item">
+            <div
+              v-for="item in getForecastsByTrend('stable').slice(0, 5)"
+              :key="item.id"
+              class="trend-item"
+            >
               <span class="item-name">{{ item.item_name }}</span>
-              <span class="item-change neutral">{{ getChangePercent(item) }}%</span>
+              <span class="item-change neutral">{{
+                getChangePercent(item)
+              }}</span>
             </div>
-            <div v-if="getForecastsByTrend('stable').length > 5" class="more-items">
-              +{{ getForecastsByTrend('stable').length - 5 }} {{ t('demand.more') }}
+            <div
+              v-if="getForecastsByTrend('stable').length > 5"
+              class="more-items"
+            >
+              +{{ getForecastsByTrend("stable").length - 5 }}
+              {{ t("demand.more") }}
             </div>
           </div>
         </div>
@@ -51,17 +81,31 @@
           <div class="trend-header">
             <div class="trend-icon">↓</div>
             <div>
-              <div class="trend-label">{{ t('demand.decreasingDemand') }}</div>
-              <div class="trend-count">{{ t('demand.itemsCount', { count: getForecastsByTrend('decreasing').length }) }}</div>
+              <div class="trend-label">{{ t("demand.decreasingDemand") }}</div>
+              <div class="trend-count">
+                {{
+                  t("demand.itemsCount", {
+                    count: getForecastsByTrend("decreasing").length,
+                  })
+                }}
+              </div>
             </div>
           </div>
           <div class="trend-items">
-            <div v-for="item in getForecastsByTrend('decreasing').slice(0, 5)" :key="item.id" class="trend-item">
+            <div
+              v-for="item in getForecastsByTrend('decreasing').slice(0, 5)"
+              :key="item.id"
+              class="trend-item"
+            >
               <span class="item-name">{{ item.item_name }}</span>
-              <span class="item-change">{{ getChangePercent(item) }}%</span>
+              <span class="item-change">{{ getChangePercent(item) }}</span>
             </div>
-            <div v-if="getForecastsByTrend('decreasing').length > 5" class="more-items">
-              +{{ getForecastsByTrend('decreasing').length - 5 }} {{ t('demand.more') }}
+            <div
+              v-if="getForecastsByTrend('decreasing').length > 5"
+              class="more-items"
+            >
+              +{{ getForecastsByTrend("decreasing").length - 5 }}
+              {{ t("demand.more") }}
             </div>
           </div>
         </div>
@@ -69,30 +113,34 @@
 
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">{{ t('demand.demandForecasts') }}</h3>
+          <h3 class="card-title">{{ t("demand.demandForecasts") }}</h3>
         </div>
         <div class="table-container">
           <table>
             <thead>
               <tr>
-                <th>{{ t('demand.table.sku') }}</th>
-                <th>{{ t('demand.table.itemName') }}</th>
-                <th>{{ t('demand.table.currentDemand') }}</th>
-                <th>{{ t('demand.table.forecastedDemand') }}</th>
-                <th>{{ t('demand.table.change') }}</th>
-                <th>{{ t('demand.table.trend') }}</th>
-                <th>{{ t('demand.table.period') }}</th>
+                <th>{{ t("demand.table.sku") }}</th>
+                <th>{{ t("demand.table.itemName") }}</th>
+                <th>{{ t("demand.table.currentDemand") }}</th>
+                <th>{{ t("demand.table.forecastedDemand") }}</th>
+                <th>{{ t("demand.table.change") }}</th>
+                <th>{{ t("demand.table.trend") }}</th>
+                <th>{{ t("demand.table.period") }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="forecast in forecasts" :key="forecast.id">
-                <td><strong>{{ forecast.item_sku }}</strong></td>
+                <td>
+                  <strong>{{ forecast.item_sku }}</strong>
+                </td>
                 <td>{{ forecast.item_name }}</td>
                 <td>{{ forecast.current_demand }}</td>
-                <td><strong>{{ forecast.forecasted_demand }}</strong></td>
+                <td>
+                  <strong>{{ forecast.forecasted_demand }}</strong>
+                </td>
                 <td>
                   <span :style="{ color: getChangeColor(forecast) }">
-                    {{ getChangePercent(forecast) }}%
+                    {{ getChangePercent(forecast) }}
                   </span>
                 </td>
                 <td>
@@ -111,103 +159,87 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, computed } from 'vue'
-import { api } from '../api'
-import { useFilters } from '../composables/useFilters'
-import { useI18n } from '../composables/useI18n'
+import { ref, onMounted, watch } from "vue";
+import { api } from "../api";
+import { useFilters } from "../composables/useFilters";
+import { useI18n } from "../composables/useI18n";
 
 export default {
-  name: 'Demand',
+  name: "Demand",
   setup() {
-    const { t } = useI18n()
-    const loading = ref(true)
-    const error = ref(null)
-    const allForecasts = ref([])
-    const inventoryItems = ref([])
+    const { t, currentLocale } = useI18n();
+    const loading = ref(true);
+    const error = ref(null);
+    const forecasts = ref([]);
 
-    // Use shared filters
-    const { selectedLocation, selectedCategory, getCurrentFilters } = useFilters()
+    const { selectedLocation, selectedCategory, getCurrentFilters } =
+      useFilters();
 
-    // Filter forecasts based on inventory filters
-    const forecasts = computed(() => {
-      if (selectedLocation.value === 'all' && selectedCategory.value === 'all') {
-        return allForecasts.value
-      }
-
-      // Get SKUs of items that match the filters
-      const validSkus = new Set(inventoryItems.value.map(item => item.sku))
-      return allForecasts.value.filter(f => validSkus.has(f.item_sku))
-    })
-
+    let inflight = null;
     const loadForecasts = async () => {
+      inflight?.abort();
+      const controller = new AbortController();
+      inflight = controller;
+      loading.value = true;
+      error.value = null;
       try {
-        loading.value = true
-        const filters = getCurrentFilters()
-
-        const [forecastsData, inventoryData] = await Promise.all([
-          api.getDemandForecasts(),
-          api.getInventory({
-            warehouse: filters.warehouse,
-            category: filters.category
-          })
-        ])
-
-        allForecasts.value = forecastsData
-        inventoryItems.value = inventoryData
+        forecasts.value = await api.getDemandForecasts(getCurrentFilters(), {
+          signal: controller.signal,
+        });
       } catch (err) {
-        error.value = 'Failed to load demand forecasts: ' + err.message
+        if (err?.code === "CANCELED") return;
+        error.value = err?.message || "Failed to load demand forecasts";
       } finally {
-        loading.value = false
+        loading.value = false;
       }
-    }
+    };
 
-    // Watch for filter changes and reload data
     watch([selectedLocation, selectedCategory], () => {
-      loadForecasts()
-    })
+      loadForecasts();
+    });
 
-    const getForecastsByTrend = (trend) => {
-      return forecasts.value.filter(f => f.trend === trend)
-    }
+    const getForecastsByTrend = (trend) =>
+      forecasts.value.filter((f) => f.trend === trend);
 
     const getChangePercent = (forecast) => {
-      const change = ((forecast.forecasted_demand - forecast.current_demand) / forecast.current_demand * 100).toFixed(1)
-      return change > 0 ? `+${change}` : change
-    }
+      if (forecast.current_demand === 0) return "—";
+      const pct = (
+        ((forecast.forecasted_demand - forecast.current_demand) /
+          forecast.current_demand) *
+        100
+      ).toFixed(1);
+      const num = parseFloat(pct);
+      if (!isFinite(num)) return "—";
+      return num > 0 ? `+${pct}%` : `${pct}%`;
+    };
 
     const getChangeColor = (forecast) => {
-      const change = forecast.forecasted_demand - forecast.current_demand
-      const changePercent = Math.abs((change / forecast.current_demand) * 100)
-
-      // If change is within ±2%, consider it stable and show blue
-      if (changePercent <= 2) {
-        return '#3b82f6' // Blue for stable
-      }
-
-      if (change > 0) return '#10b981' // Green for increasing
-      if (change < 0) return '#ef4444' // Red for decreasing
-      return '#3b82f6' // Blue for no change
-    }
+      if (forecast.current_demand === 0) return "#3b82f6";
+      const change = forecast.forecasted_demand - forecast.current_demand;
+      const changePercent = Math.abs((change / forecast.current_demand) * 100);
+      if (changePercent <= 2) return "#3b82f6";
+      if (change > 0) return "#10b981";
+      if (change < 0) return "#ef4444";
+      return "#3b82f6";
+    };
 
     const translatePeriod = (period) => {
-      // Period values like "Next 3 months", "Q1 2025", "30 days", etc.
-      const { currentLocale } = useI18n()
-      if (currentLocale.value === 'ja') {
+      if (currentLocale.value === "ja") {
         return period
-          .replace(/Next\s+/i, '次の')
-          .replace(/\s+months/i, 'か月')
-          .replace(/\s+month/i, 'か月')
-          .replace(/\s+days/i, '日間')
-          .replace(/\s+day/i, '日')
-          .replace('Q1', '第1四半期')
-          .replace('Q2', '第2四半期')
-          .replace('Q3', '第3四半期')
-          .replace('Q4', '第4四半期')
+          .replace(/Next\s+/i, "次の")
+          .replace(/\s+months/i, "か月")
+          .replace(/\s+month/i, "か月")
+          .replace(/\s+days/i, "日間")
+          .replace(/\s+day/i, "日")
+          .replace("Q1", "第1四半期")
+          .replace("Q2", "第2四半期")
+          .replace("Q3", "第3四半期")
+          .replace("Q4", "第4四半期");
       }
-      return period
-    }
+      return period;
+    };
 
-    onMounted(loadForecasts)
+    onMounted(loadForecasts);
 
     return {
       t,
@@ -217,10 +249,10 @@ export default {
       getForecastsByTrend,
       getChangePercent,
       getChangeColor,
-      translatePeriod
-    }
-  }
-}
+      translatePeriod,
+    };
+  },
+};
 </script>
 
 <style scoped>

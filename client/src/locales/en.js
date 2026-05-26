@@ -7,112 +7,117 @@ export default {
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
     restocking: 'Restocking',
+    reports: 'Reports',
+    backlog: 'Backlog',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
 
+  productNames: {},
+  customerNames: {},
+
   // Dashboard
   dashboard: {
-    title: 'Overview',
+    title: "Overview",
     kpi: {
-      title: 'Key Performance Indicators',
-      inventoryTurnover: 'Inventory Turnover Rate',
-      ordersFulfilled: 'Orders Fulfilled',
-      orderFillRate: 'Order Fill Rate',
-      revenue: 'Revenue (Orders)',
-      revenueYTD: 'Revenue (Orders) YTD',
-      revenueMTD: 'Revenue (Orders) MTD',
-      avgProcessingTime: 'Avg Processing Time (Days)',
-      goal: 'Goal'
+      title: "Key Performance Indicators",
+      inventoryTurnover: "Inventory Turnover Rate",
+      ordersFulfilled: "Orders Fulfilled",
+      orderFillRate: "Order Fill Rate",
+      revenue: "Revenue (Orders)",
+      revenueYTD: "Revenue (Orders) YTD",
+      revenueMTD: "Revenue (Orders) MTD",
+      avgProcessingTime: "Avg Processing Time (Days)",
+      goal: "Goal",
     },
     summary: {
-      title: 'Summary'
+      title: "Summary",
     },
     orderHealth: {
-      title: 'Order Health',
-      totalOrders: 'Total Orders',
-      revenue: 'Revenue',
-      avgOrderValue: 'Avg Order Value',
-      onTimeRate: 'On-Time Rate',
-      avgFulfillmentDays: 'Avg Fulfillment (Days)',
-      total: 'Total'
+      title: "Order Health",
+      totalOrders: "Total Orders",
+      revenue: "Revenue",
+      avgOrderValue: "Avg Order Value",
+      onTimeRate: "On-Time Rate",
+      avgFulfillmentDays: "Avg Fulfillment (Days)",
+      total: "Total",
     },
     ordersByMonth: {
-      title: 'Orders by Month'
+      title: "Orders by Month",
     },
     inventoryValue: {
-      title: 'Inventory Value by Category'
+      title: "Inventory Value by Category",
     },
     inventoryShortages: {
-      title: 'Inventory Shortages',
-      noShortages: 'No inventory shortages - all orders can be fulfilled!',
-      noData: 'No inventory data for selected filters',
-      orderId: 'Order ID',
-      sku: 'SKU',
-      itemName: 'Item Name',
-      quantityNeeded: 'Quantity Needed',
-      quantityAvailable: 'Quantity Available',
-      shortage: 'Shortage',
-      daysDelayed: 'Days Delayed',
-      priority: 'Priority',
-      unitsShort: 'units short',
-      days: 'days'
+      title: "Inventory Shortages",
+      noShortages: "No inventory shortages - all orders can be fulfilled!",
+      noData: "No inventory data for selected filters",
+      orderId: "Order ID",
+      sku: "SKU",
+      itemName: "Item Name",
+      quantityNeeded: "Quantity Needed",
+      quantityAvailable: "Quantity Available",
+      shortage: "Shortage",
+      daysDelayed: "Days Delayed",
+      priority: "Priority",
+      unitsShort: "units short",
+      days: "days",
     },
     topProducts: {
-      title: 'Top Products by Revenue',
-      sku: 'SKU',
-      product: 'Product',
-      category: 'Category',
-      warehouse: 'Warehouse',
-      stockStatus: 'Stock Status',
-      revenue: 'Revenue',
-      unitsOrdered: 'Units Ordered',
-      firstOrder: 'First Order',
-      inStock: 'In Stock',
-      lowStock: 'Low Stock'
-    }
+      title: "Top Products by Revenue",
+      sku: "SKU",
+      product: "Product",
+      category: "Category",
+      warehouse: "Warehouse",
+      stockStatus: "Stock Status",
+      revenue: "Revenue",
+      unitsOrdered: "Units Ordered",
+      firstOrder: "First Order",
+      inStock: "In Stock",
+      lowStock: "Low Stock",
+    },
   },
 
   // Inventory
   inventory: {
-    title: 'Inventory',
-    description: 'Track and manage all inventory items',
-    stockLevels: 'Stock Levels',
-    skus: 'SKUs',
-    searchPlaceholder: 'Search by item name...',
-    clearSearch: 'Clear search',
-    totalItems: 'Total Items',
-    totalValue: 'Total Value',
-    lowStockItems: 'Low Stock Items',
-    warehouses: 'Warehouses',
+    title: "Inventory",
+    description: "Track and manage all inventory items",
+    stockLevels: "Stock Levels",
+    skus: "SKUs",
+    searchPlaceholder: "Search by item name...",
+    clearSearch: "Clear search",
+    totalItems: "Total Items",
+    totalValue: "Total Value",
+    lowStockItems: "Low Stock Items",
+    warehouses: "Warehouses",
     table: {
-      sku: 'SKU',
-      itemName: 'Item Name',
-      name: 'Name',
-      category: 'Category',
-      warehouse: 'Warehouse',
-      quantity: 'Quantity',
-      quantityOnHand: 'Quantity on Hand',
-      reorderPoint: 'Reorder Point',
-      unitCost: 'Unit Cost',
-      unitPrice: 'Unit Price',
-      totalValue: 'Total Value',
-      location: 'Location',
-      status: 'Status'
-    }
+      sku: "SKU",
+      itemName: "Item Name",
+      name: "Name",
+      category: "Category",
+      warehouse: "Warehouse",
+      quantity: "Quantity",
+      quantityOnHand: "Quantity on Hand",
+      reorderPoint: "Reorder Point",
+      unitCost: "Unit Cost",
+      unitPrice: "Unit Price",
+      totalValue: "Total Value",
+      location: "Location",
+      status: "Status",
+    },
   },
 
   // Orders
   orders: {
-    title: 'Orders',
-    description: 'View and manage customer orders',
-    allOrders: 'All Orders',
-    totalOrders: 'Total Orders',
-    totalRevenue: 'Total Revenue',
-    avgOrderValue: 'Avg Order Value',
-    onTimeDelivery: 'On-Time Delivery',
-    itemsCount: '{count} items',
-    quantity: 'Qty',
+    title: "Orders",
+    description: "View and manage customer orders",
+    allOrders: "All Orders",
+    totalOrders: "Total Orders",
+    totalRevenue: "Total Revenue",
+    avgOrderValue: "Avg Order Value",
+    onTimeDelivery: "On-Time Delivery",
+    itemsCount: "{count} items",
+    quantity: "Qty",
     table: {
       orderNumber: 'Order Number',
       orderId: 'Order ID',
@@ -145,61 +150,61 @@ export default {
 
   // Finance/Spending
   finance: {
-    title: 'Finance Dashboard',
-    description: 'Track revenue, costs, and financial performance',
-    totalRevenue: 'Total Revenue',
-    totalCosts: 'Total Costs',
-    netProfit: 'Net Profit',
-    avgOrderValue: 'Avg Order Value',
-    fromOrders: 'From {count} orders',
-    costBreakdown: 'Procurement + Operational + Labor + Overhead',
-    margin: 'margin',
-    perOrderRevenue: 'Per order revenue',
+    title: "Finance Dashboard",
+    description: "Track revenue, costs, and financial performance",
+    totalRevenue: "Total Revenue",
+    totalCosts: "Total Costs",
+    netProfit: "Net Profit",
+    avgOrderValue: "Avg Order Value",
+    fromOrders: "From {count} orders",
+    costBreakdown: "Procurement + Operational + Labor + Overhead",
+    margin: "margin",
+    perOrderRevenue: "Per order revenue",
     revenueVsCosts: {
-      title: 'Monthly Revenue vs Costs',
-      revenue: 'Revenue',
-      costs: 'Total Costs'
+      title: "Monthly Revenue vs Costs",
+      revenue: "Revenue",
+      costs: "Total Costs",
     },
     monthlyCostFlow: {
-      title: 'Monthly Cost Flow',
-      procurement: 'Procurement',
-      operational: 'Operational',
-      labor: 'Labor',
-      overhead: 'Overhead'
+      title: "Monthly Cost Flow",
+      procurement: "Procurement",
+      operational: "Operational",
+      labor: "Labor",
+      overhead: "Overhead",
     },
     categorySpending: {
-      title: 'Spending by Category',
-      ofTotal: 'of total'
+      title: "Spending by Category",
+      ofTotal: "of total",
     },
     transactions: {
-      title: 'Recent Transactions',
-      id: 'ID',
-      description: 'Description',
-      vendor: 'Vendor',
-      date: 'Date',
-      amount: 'Amount'
-    }
+      title: "Recent Transactions",
+      id: "ID",
+      description: "Description",
+      vendor: "Vendor",
+      date: "Date",
+      amount: "Amount",
+    },
   },
 
   // Demand Forecast
   demand: {
-    title: 'Demand Forecast',
-    description: 'Analyze demand trends and forecasts',
-    increasingDemand: 'Increasing Demand',
-    stableDemand: 'Stable Demand',
-    decreasingDemand: 'Decreasing Demand',
-    itemsCount: '{count} items',
-    more: 'more...',
-    demandForecasts: 'Demand Forecasts',
+    title: "Demand Forecast",
+    description: "Analyze demand trends and forecasts",
+    increasingDemand: "Increasing Demand",
+    stableDemand: "Stable Demand",
+    decreasingDemand: "Decreasing Demand",
+    itemsCount: "{count} items",
+    more: "more...",
+    demandForecasts: "Demand Forecasts",
     table: {
-      sku: 'SKU',
-      itemName: 'Item Name',
-      currentDemand: 'Current Demand',
-      forecastedDemand: 'Forecasted Demand',
-      change: 'Change',
-      trend: 'Trend',
-      period: 'Period'
-    }
+      sku: "SKU",
+      itemName: "Item Name",
+      currentDemand: "Current Demand",
+      forecastedDemand: "Forecasted Demand",
+      change: "Change",
+      trend: "Trend",
+      period: "Period",
+    },
   },
 
   // Restocking
@@ -243,12 +248,12 @@ export default {
 
   // Filters
   filters: {
-    timePeriod: 'Time Period',
-    location: 'Location',
-    category: 'Category',
-    orderStatus: 'Order Status',
-    all: 'All',
-    allMonths: 'All Months'
+    timePeriod: "Time Period",
+    location: "Location",
+    category: "Category",
+    orderStatus: "Order Status",
+    all: "All",
+    allMonths: "All Months",
   },
 
   // Statuses
@@ -265,118 +270,165 @@ export default {
 
   // Trends
   trends: {
-    increasing: 'increasing',
-    stable: 'stable',
-    decreasing: 'decreasing'
+    increasing: "increasing",
+    stable: "stable",
+    decreasing: "decreasing",
   },
 
   // Priority
   priority: {
-    high: 'High',
-    medium: 'Medium',
-    low: 'Low'
+    high: "High",
+    medium: "Medium",
+    low: "Low",
   },
 
   // Categories
   categories: {
-    circuitBoards: 'Circuit Boards',
-    sensors: 'Sensors',
-    actuators: 'Actuators',
-    controllers: 'Controllers',
-    powerSupplies: 'Power Supplies'
+    circuitBoards: "Circuit Boards",
+    sensors: "Sensors",
+    actuators: "Actuators",
+    controllers: "Controllers",
+    powerSupplies: "Power Supplies",
   },
 
   // Spending Categories
   spendingCategories: {
-    rawMaterials: 'Raw Materials',
-    components: 'Components',
-    equipment: 'Equipment',
-    consumables: 'Consumables'
+    rawMaterials: "Raw Materials",
+    components: "Components",
+    equipment: "Equipment",
+    consumables: "Consumables",
   },
 
   // Warehouses
   warehouses: {
-    sanFrancisco: 'San Francisco',
-    london: 'London',
-    tokyo: 'Tokyo'
+    sanFrancisco: "San Francisco",
+    london: "London",
+    tokyo: "Tokyo",
   },
 
   // Months
   months: {
-    jan: 'Jan',
-    feb: 'Feb',
-    mar: 'Mar',
-    apr: 'Apr',
-    may: 'May',
-    jun: 'Jun',
-    jul: 'Jul',
-    aug: 'Aug',
-    sep: 'Sep',
-    oct: 'Oct',
-    nov: 'Nov',
-    dec: 'Dec',
-    january: 'January',
-    february: 'February',
-    march: 'March',
-    april: 'April',
-    june: 'June',
-    july: 'July',
-    august: 'August',
-    september: 'September',
-    october: 'October',
-    november: 'November',
-    december: 'December'
+    jan: "Jan",
+    feb: "Feb",
+    mar: "Mar",
+    apr: "Apr",
+    may: "May",
+    jun: "Jun",
+    jul: "Jul",
+    aug: "Aug",
+    sep: "Sep",
+    oct: "Oct",
+    nov: "Nov",
+    dec: "Dec",
+    january: "January",
+    february: "February",
+    march: "March",
+    april: "April",
+    june: "June",
+    july: "July",
+    august: "August",
+    september: "September",
+    october: "October",
+    november: "November",
+    december: "December",
   },
 
   // Profile Menu
   profile: {
-    profileDetails: 'Profile Details',
-    myTasks: 'My Tasks',
-    logout: 'Logout'
+    profileDetails: "Profile Details",
+    myTasks: "My Tasks",
+    logout: "Logout",
   },
 
   // Profile Details Modal
   profileDetails: {
-    title: 'Profile Details',
-    email: 'Email',
-    department: 'Department',
-    location: 'Location',
-    phone: 'Phone',
-    joinDate: 'Join Date',
-    employeeId: 'Employee ID',
-    close: 'Close'
+    title: "Profile Details",
+    email: "Email",
+    department: "Department",
+    location: "Location",
+    phone: "Phone",
+    joinDate: "Join Date",
+    employeeId: "Employee ID",
+    close: "Close",
   },
 
   // Tasks Modal
   tasks: {
-    title: 'My Tasks',
-    taskTitle: 'Task Title',
-    taskTitlePlaceholder: 'Enter task title...',
-    priority: 'Priority',
-    dueDate: 'Due Date',
-    addTask: 'Add Task',
-    noTasks: 'No tasks yet. Add your first task above!'
+    title: "My Tasks",
+    taskTitle: "Task Title",
+    taskTitlePlaceholder: "Enter task title...",
+    priority: "Priority",
+    dueDate: "Due Date",
+    addTask: "Add Task",
+    noTasks: "No tasks yet. Add your first task above!",
+    defaults: {
+      reviewQ4: "Review Q4 inventory levels",
+      approveTokyo: "Approve Tokyo warehouse orders",
+      updateReorderPoints: "Update reorder points for Circuit Boards",
+      reviewMonthlySpending: "Review monthly spending report",
+    },
+  },
+
+  // Reports
+  reports: {
+    title: "Reports",
+    description: "Quarterly performance and monthly trends",
+    quarterly: "Quarterly Performance",
+    monthlyTrend: "Monthly Revenue Trend",
+    monthOverMonth: "Month-over-Month",
+    quarter: "Quarter",
+    revenue: "Revenue",
+    orders: "Orders",
+    avgOrderValue: "Avg Order Value",
+    fulfillmentRate: "Fulfillment Rate",
+    month: "Month",
+    growth: "Growth",
+    totalRevenueYtd: "Total Revenue YTD",
+    bestQuarter: "Best Quarter",
+  },
+
+  // Backlog
+  backlog: {
+    title: "Backlog Management",
+    description: "Track and prioritize backlog items",
+    high: "High Priority",
+    medium: "Medium Priority",
+    low: "Low Priority",
+    loading: "Loading backlog...",
+    empty: "No backlog items match the current filters.",
+    table: {
+      sku: "SKU",
+      itemName: "Item Name",
+      warehouse: "Warehouse",
+      quantityNeeded: "Quantity Needed",
+      quantityAvailable: "Available",
+      shortage: "Shortage",
+      daysDelayed: "Days Delayed",
+      priority: "Priority",
+    },
+    unitsShort: "units short",
+    days: "days",
   },
 
   // Language
   language: {
-    english: 'English',
-    japanese: 'Japanese',
-    selectLanguage: 'Select Language'
+    english: "English",
+    japanese: "Japanese",
+    selectLanguage: "Select Language",
   },
 
   // Common
   common: {
-    loading: 'Loading...',
-    error: 'Error',
-    noData: 'No data available',
-    viewDetails: 'View Details',
-    close: 'Close',
-    save: 'Save',
-    cancel: 'Cancel',
-    search: 'Search',
-    filter: 'Filter',
-    export: 'Export',
-    items: 'items'
-  }
-}
+    loading: "Loading...",
+    error: "Error",
+    noData: "No data available",
+    viewDetails: "View Details",
+    close: "Close",
+    save: "Save",
+    cancel: "Cancel",
+    search: "Search",
+    filter: "Filter",
+    export: "Export",
+    items: "items",
+  },
+};
